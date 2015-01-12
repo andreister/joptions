@@ -1,0 +1,23 @@
+{
+  "name" : "joptions",
+  "version" : "0.0.1",
+  "description" : "JavaScript library for Options valuation",
+  "author" : {
+    "name" : "Andrew Kazyrevich",
+    "url" : "http://andreister.github.io"
+  },
+  "licenses" : [{
+    "type" : "MIT",
+    "url" : "http://www.opensource.org/licenses/mit-license.php"
+  }],
+  "repository" : {
+    "type" : "git",
+    "url" : "http://github.com/andreister/joptions.git"
+  },
+  "dependencies" : {
+    "vows" : "https://github.com/flatiron/vows/archive/master.tar.gz"
+  },
+  "scripts" : {
+    "test" : "./node_modules/vows/bin/vows --spec --isolate"
+  }
+}
