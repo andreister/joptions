@@ -2,12 +2,25 @@ var jStat = require("./jstat.js").jStat;
 
 this.joptions = (function(undefined) {
 
-	var version = function () {
-		return "0.0.1";
-	};
+	// Black-Scholes generic function for d1 and d2
+	var d = function(sign, input) {
+		var multiplier = {"+": 1, "-": -1}[sign];
+		var drift = (input.r + multiplier * Math.pow(input.volatility,2) / 2);
+		var factor = 1/(input.volatility*Math.sqrt(input.maturity));      	
+		
+		return factor * ( Math.log(input.S/input.K) + drift * input.maturity );
+	}
 
 	return {
-		version:  version,
+		version:  function () {
+			return "0.0.1";
+		},
+		d1: function(input) {
+			return d("+", input);
+		},
+		d2: function(input) {
+			return d("-", input);
+		},
 		jStat: jStat
 	};
 
