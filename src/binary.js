@@ -1,5 +1,8 @@
 module.exports = function(joptions) {
 
+	var cdf = joptions.cdf;
+	var d2 = joptions.d2;
+
 	//	Option price calculation.
 	//	type - "p" for put, "c" for call
 	// 	input - {
@@ -11,7 +14,7 @@ module.exports = function(joptions) {
 	// 	}
 	var price = function(type, input) {
 		var sign = { "p": -1, "c": 1 }[type];
-		var expectedPayoff = joptions.jStat.normal.cdf( sign*joptions.d2(input), 0, 1);
+		var expectedPayoff = cdf( sign*d2(input), 0, 1);
 
 		var discount = Math.exp(-input.r*input.maturity);
 

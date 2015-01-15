@@ -2,4 +2,5 @@
 
 joptions = require('../src/core.js').joptions;
 require('../src/binary.js')(joptions);
+require('../src/greeks.js')(joptions);
 

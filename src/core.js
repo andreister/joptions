@@ -8,7 +8,7 @@ this.joptions = (function(undefined) {
 		var drift = (input.r + multiplier * Math.pow(input.volatility,2) / 2);
 		var factor = 1/(input.volatility*Math.sqrt(input.maturity));      	
 		
-		return factor * ( Math.log(input.S/input.K) + drift * input.maturity );
+		return factor * ( Math.log(input.S/input.K)  +  drift * input.maturity );
 	}
 
 	return {
@@ -21,7 +21,12 @@ this.joptions = (function(undefined) {
 		d2: function(input) {
 			return d("-", input);
 		},
-		jStat: jStat
+		cdf: function(value) {
+			return jStat.normal.cdf(value, 0, 1);
+		},
+		pdf: function(value) {
+			return jStat.normal.pdf(value, 0, 1);
+		}
 	};
 
 }());
