@@ -1,6 +1,6 @@
-var jStat = require("./jstat.js").jStat;
-
 this.joptions = (function(undefined) {
+
+	var jStat = require("./jstat.js").jStat;
 
 	// Black-Scholes generic function for d1 and d2
 	var d = function(sign, input) {
