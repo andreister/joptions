@@ -24,13 +24,13 @@ var callPrice = joptions.currency.price(option);
 ```
 
 ```
-var option= { S: 75, K: 90, T: 0.8, r: 0.02, volatility: 0.2 };
+var option = { S: 75, X: 90, T: 0.8, r: 0.02, volatility: 0.2 };
 var gamma = joptions.greeks.gamma(option);
 var vega = joptions.greeks.vega(option);
 ```
 
 ```
-var option= { S: 100, K: 95, P: 11.10, T: 0.5, r: 0.03 };
+var option = { S: 100, X: 95, P: 11.10, T: 0.5, r: 0.03 };
 var impliedVolatility = joptions.volatility.implied(option);
 ```
 
