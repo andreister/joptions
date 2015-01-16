@@ -27,6 +27,12 @@ suite.addBatch({
 	'gamma': function(greeks) {
 		var input= { S: 100, K: 80, maturity: 9/12, r: 0.06, volatility: 0.35 };
 		assert.epsilon(tolerance, greeks.gamma(input), 0.0077);
+	},
+
+	//Checked against RQuantLib's EuropeanOption('c', 100, 80, 0, 0.06, 9/12, 0.35)
+	'vega': function(greeks) {
+		var input= { S: 100, K: 80, maturity: 9/12, r: 0.06, volatility: 0.35 };
+		assert.epsilon(tolerance, greeks.vega(input), 20.1971);
 	}
   }
 });

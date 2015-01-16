@@ -14,6 +14,10 @@ module.exports = function(joptions) {
 		gamma: function(input) {
 			var factor = input.S * input.volatility * Math.sqrt(input.maturity);
 			return pdf( d1(input) ) / factor;
+		},
+
+		vega: function(input) {
+			return input.S * pdf( d1(input) ) * Math.sqrt(input.maturity);
 		}
 
 	};
