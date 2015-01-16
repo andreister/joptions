@@ -30,7 +30,7 @@ var vega = joptions.greeks.vega(option);
 ```
 
 ```
-var option = { S: 100, X: 95, P: 11.10, T: 0.5, r: 0.03 };
+var option = { type: 'p', S: 100, X: 95, P: 11.10, T: 0.5, r: 0.03 };
 var impliedVolatility = joptions.volatility.implied(option);
 ```
 
