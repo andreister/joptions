@@ -4,6 +4,7 @@ module.exports = function(joptions) {
 	var d2 = joptions.d2;
 
 	//	Option price calculation.
+	//
 	//	type - "p" for put, "c" for call
 	// 	input - {
 	//		S: spot price of the underlying security,
@@ -14,7 +15,7 @@ module.exports = function(joptions) {
 	// 	}
 	var price = function(type, input) {
 		var sign = { "p": -1, "c": 1 }[type];
-		var expectedPayoff = cdf( sign*d2(input), 0, 1);
+		var expectedPayoff = cdf( sign*d2(input) );
 
 		var discount = Math.exp(-input.r*input.maturity);
 
@@ -29,6 +30,10 @@ module.exports = function(joptions) {
 
 		put: function(input) {
 			return price("p", input);
+		},
+
+		price: function(type, input) {
+			return price(type, input);
 		}
 
 	};
