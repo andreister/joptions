@@ -11,17 +11,17 @@ module.exports = function(joptions) {
 		// 	input - {
 		//		type: "c" for calls, "p" for puts
 		//		S: spot price of the foreign currency,
-		//		K: strike price,
+		//		X: strike price,
 		//		maturity: time to maturity,
-		//		r: local risk free interest rate,
+		//		r: risk free interest rate,
 		//		rf: foreign risk free interest rate,
-		//		variance: variance of the returns on the foreign currency 
+		//		volatility: volatility of the returns on the foreign currency 
 		// 	}
 		price: function(option) {
-			var option1 = joptions.clone(option, function(x) { x.r = option.r - option.rf});
+			var noInterestOption = joptions.clone(option, function(x) { x.r = option.r - option.rf});
 
-			var underlyingPrice = expectedUnderlyingPrice(option.S, option1);
-			var payoff = expectedPayoff(option.X, option1);
+			var underlyingPrice = expectedUnderlyingPrice(option.S, noInterestOption);
+			var payoff = expectedPayoff(option.X, noInterestOption);
 			
 			return discountF(option)*underlyingPrice - discount(option)*payoff;
 		}

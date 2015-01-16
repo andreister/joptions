@@ -17,9 +17,9 @@ module.exports = function(joptions) {
 	// 	input - {
 	//		type: "c" for calls, "p" for puts		
 	//		S: spot price of the underlying security,
-	//		K: strike price,
+	//		X: strike price,
 	//		P: price of the option,
-	//		maturity: time to maturity,
+	//		T: time to maturity,
 	//		r: risk free interest rate
 	// 	}
 	var volatility = function(option) {
