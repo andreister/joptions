@@ -6,42 +6,39 @@ module.exports = function(joptions) {
 
 	joptions.volatility = {
 		
-		implied: function(type, input) {
-			return volatility(type, input);
+		implied: function(option) {
+			return volatility(option);
 		}
 
 	};
 
 	//	Implied volatility calculation via Newton-Raphson method.
 	//
-	//	type - "p" for put, "c" for call
 	// 	input - {
+	//		type: "c" for calls, "p" for puts		
 	//		S: spot price of the underlying security,
 	//		K: strike price,
 	//		P: price of the option,
 	//		maturity: time to maturity,
 	//		r: risk free interest rate
 	// 	}
-	var volatility = function(type, input) {
+	var volatility = function(option) {
 
 		var ITERATIONS = 1000;
 		var ACCURACY = 0.0001
 
-		var i = 0;
-		var option = joptions.clone(input, function(x) {
-			x.volatility = (input.P/input.S) / (0.398*Math.sqrt(input.maturity))		//initial guess
-		});
+		option.volatility = (option.P/option.S) * (2.5/Math.sqrt(option.T));		//initial guess via Brenner and Subrahmanyam (1988)
+		
+		for (var i = 0; i < ITERATIONS; i++) {
 
-		for (i = 0; i < ITERATIONS; i++) {
-
-  			var diff = input.P - price(type, option);
+  			var diff = option.P - price(option);
   			if (Math.abs(diff) < ACCURACY) {
   				return option.volatility;
   			}
   			option.volatility += diff/vega(option);
   		}
 
-  		console.error("joptions.volatility.implied(): failed to converge")
+  		console.error("joptions.implied.volatility(): failed to converge");
 		return 0;
 	}
 

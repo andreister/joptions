@@ -4,38 +4,31 @@ module.exports = function(joptions) {
 	var d2 = joptions.d2;	
 
 	joptions.binary = {
-		
-		call: function(input) {
-			return price("c", input);
-		},
 
-		put: function(input) {
-			return price("p", input);
-		},
-
-		price: function(type, input) {
-			return price(type, input);
+		//	Binary option price calculation.
+		//
+		//	option - {
+		//		type: "c" for calls, "p" for puts
+		//		S: spot price of the underlying security,
+		//		X: strike price,
+		//		T: time to maturity,
+		//		r: risk free interest rate,
+		//		volatility: volatility of the underlying security
+		// 	}
+		price: function(option) {
+			var payoff = expectedPayoff(option);
+			return discount(option) * payoff;
 		}
 
 	};
 
-	//	Binary option price calculation.
-	//
-	//	type - "p" for put, "c" for call
-	// 	input - {
-	//		S: spot price of the underlying security,
-	//		K: strike price,
-	//		maturity: time to maturity,
-	//		r: risk free interest rate,
-	//		volatility: volatility of the underlying security
-	// 	}
-	var price = function(type, input) {
-		var sign = joptions.sign(type);
+	var expectedPayoff = function(option)  {
+		var sign = joptions.sign(option.type);
+		return cdf( sign*d2(option) );
+	}
 
-		var expectedPayoff = cdf( sign*d2(input) );
-		var discount = Math.exp(-input.r*input.maturity);
-
-		return discount*expectedPayoff;
-	}	
+	var discount = function(option) 	{
+		return Math.exp(-option.r*option.T);
+	};
 
 }

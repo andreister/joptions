@@ -13,14 +13,14 @@ suite.addBatch({
 
     //Checked against RQuantLib's EuropeanOption('c', 100, 80, 0, 0.06, 9/12, 0.35)
     'call price': function(regular) {
-      var input= { S: 100, K: 80, maturity: 9/12, r: 0.06, volatility: 0.35 };
-      assert.epsilon(tolerance, regular.call(input), 26.2391);
+      var option = { type: 'c', S: 100, X: 80, T: 9/12, r: 0.06, volatility: 0.35 };
+      assert.epsilon(tolerance, regular.price(option), 26.2391);
     },
 
     //Checked against RQuantLib's EuropeanOption('c', 100, 80, 0, 0.06, 9/12, 0.35)
     'put price': function(regular) {
-      var input= { S: 100, K: 80, maturity: 9/12, r: 0.06, volatility: 0.35 };
-      assert.epsilon(tolerance, regular.put(input), 2.7189);
+      var option = { type: 'p', S: 100, X: 80, T: 9/12, r: 0.06, volatility: 0.35 };
+      assert.epsilon(tolerance, regular.price(option), 2.7189);
     }
   }
 });

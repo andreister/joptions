@@ -6,38 +6,43 @@ module.exports = function(joptions) {
 
 	joptions.currency = {
 		
-		call: function(input) {
-			return price("c", input);
-		},
+		//	Currency option price calculation via Garman-Kohlhagen model.
+		//
+		// 	input - {
+		//		type: "c" for calls, "p" for puts
+		//		S: spot price of the foreign currency,
+		//		K: strike price,
+		//		maturity: time to maturity,
+		//		r: local risk free interest rate,
+		//		rf: foreign risk free interest rate,
+		//		variance: variance of the returns on the foreign currency 
+		// 	}
+		price: function(option) {
+			var option1 = joptions.clone(option, function(x) { x.r = option.r - option.rf});
 
-		put: function(input) {
-			return price("p", input);
+			var underlyingPrice = expectedUnderlyingPrice(option.S, option1);
+			var payoff = expectedPayoff(option.X, option1);
+			
+			return discountF(option)*underlyingPrice - discount(option)*payoff;
 		}
 
 	};
 
-	//	Currency option price calculation via Garman-Kohlhagen model.
-	//
-	//	type - "p" for put, "c" for call
-	// 	input - {
-	//		S: spot price of the foreign currency,
-	//		K: strike price,
-	//		maturity: time to maturity,
-	//		r: local risk free interest rate,
-	//		rf: foreign risk free interest rate,
-	//		variance: variance of the returns on the foreign currency 
-	// 	}
-	var price = function(type, input) {
-		var sign = joptions.sign(type);
+	var expectedUnderlyingPrice = function(S, option) {
+		var sign = joptions.sign(option.type);
+		return sign * S * cdf( sign * d1(option) );
+	};
 
-		var discountForeign = Math.exp( -input.rf*input.maturity );
-		var discountDomestic = Math.exp( -input.r*input.maturity);
+	var expectedPayoff = function(X, option) {
+		var sign = joptions.sign(option.type);
+		return sign * X * cdf( sign * d2(option) );
+	};
 
-		var option = joptions.clone(input, function(x) { x.r = input.r - input.rf});
-		var expectedSpotPrice = sign*input.S*cdf( sign*d1(option) );
-		var expectedPayoff = sign*input.K*cdf( sign*d2(option) ); 
-		
-		return discountForeign*expectedSpotPrice - discountDomestic*expectedPayoff;
-	};		
+	var discount = function(option) {
+		return Math.exp(-option.r*option.T);
+	};
 
+	var discountF = function(option) {
+		return Math.exp(-option.rf*option.T);
+	};
 }

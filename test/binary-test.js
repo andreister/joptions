@@ -13,14 +13,14 @@ suite.addBatch({
 
     //Checked against fExoticOption's CashOrNothingOption(TypeFlag="c", S=100, X=80, K=1, Time=9/12, r=0.06, b=0, sigma=0.35)
     'call price': function(binary) {
-      var input= { S: 100, K: 80, maturity: 9/12, r: 0.06, volatility: 0.35 };
-      assert.epsilon(tolerance, binary.call(input), 0.7344434);
+      var option = { type: 'c', S: 100, X: 80, T: 9/12, r: 0.06, volatility: 0.35 };
+      assert.epsilon(tolerance, binary.price(option), 0.7344434);
     },
 
     //Checked against fExoticOption's CashOrNothingOption(TypeFlag="p", S=100, X=80, K=1, Time=9/12, r=0.06, b=0, sigma=0.35)
     'put price': function(binary) {
-      var input= { S: 100, K: 80, maturity: 9/12, r: 0.06, volatility: 0.35 };
-      assert.epsilon(tolerance, binary.put(input), 0.2215541);
+      var option = { type: 'p', S: 100, X: 80, T: 9/12, r: 0.06, volatility: 0.35 };
+      assert.epsilon(tolerance, binary.price(option), 0.2215541);
     }
   }
 });

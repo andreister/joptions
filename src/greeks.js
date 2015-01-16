@@ -6,18 +6,18 @@ module.exports = function(joptions) {
 
 	joptions.greeks = {
 
-		delta: function(type, input) {
-			var sign = joptions.sign(type);
-			return sign*cdf( sign*d1(input) );
+		delta: function(option) {
+			var sign = joptions.sign(option.type);
+			return sign*cdf( sign*d1(option) );
 		},
 
-		gamma: function(input) {
-			var factor = input.S * input.volatility * Math.sqrt(input.maturity);
-			return pdf( d1(input) ) / factor;
+		gamma: function(option) {
+			var factor = option.S * option.volatility * Math.sqrt(option.T);
+			return pdf( d1(option) ) / factor;
 		},
 
-		vega: function(input) {
-			return input.S * pdf( d1(input) ) * Math.sqrt(input.maturity);
+		vega: function(option) {
+			return option.S * pdf( d1(option) ) * Math.sqrt(option.T);
 		}
 
 	};

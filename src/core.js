@@ -3,23 +3,25 @@ this.joptions = (function(undefined) {
 	var jStat = require("./jstat.js").jStat;
 
 	// Black-Scholes generic function for d1 and d2
-	var d = function(sign, input) {
+	var d = function(sign, option) {
 		var multiplier = {"+": 1, "-": -1}[sign];
-		var drift = (input.r + multiplier * Math.pow(input.volatility,2) / 2);
-		var factor = 1/(input.volatility*Math.sqrt(input.maturity));      	
+
+		//var σ = 
+		var drift = option.r + multiplier * option.volatility*option.volatility/2;
+		var factor = 1/(option.volatility*Math.sqrt(option.T));      	
 		
-		return factor * ( Math.log(input.S/input.K)  +  drift * input.maturity );
+		return factor * ( Math.log(option.S/option.X)  +  drift * option.T );
 	};
 
 	return {
 		version:  function () {
 			return "0.0.1";
 		},
-		d1: function(input) {
-			return d("+", input);
+		d1: function(option) {
+			return d("+", option);
 		},
-		d2: function(input) {
-			return d("-", input);
+		d2: function(option) {
+			return d("-", option);
 		},
 		cdf: function(value) {
 			return jStat.normal.cdf(value, 0, 1);
@@ -31,9 +33,9 @@ this.joptions = (function(undefined) {
 		sign: function(optionType) 		{
 			return { "p": -1, "c": 1 }[optionType];
 		},
-		clone: function(x, update) {
+		clone: function(x, modify) {
 			var result = JSON.parse(JSON.stringify(x));
-			update(result);
+			modify(result);
 			return result;
 		}
 	};

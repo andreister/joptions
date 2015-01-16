@@ -6,38 +6,36 @@ module.exports = function(joptions) {
 
 	joptions.regular = {
 		
-		call: function(input) {
-			return price("c", input);
-		},
-
-		put: function(input) {
-			return price("p", input);
-		},
-
-		price: function(type, input) {
-			return price(type, input);
+		//	Regular option price calculation via Black-Scholes model.
+		//
+		// 	input - {
+		//		type: "c" for calls, "p" for puts
+		//		S: spot price of the underlying security,
+		//		K: strike price,
+		//		maturity: time to maturity,
+		//		r: risk free interest rate,
+		//		volatility: volatility of the underlying security
+		// 	}		
+		price: function(option) {
+			var underlyingPrice = expectedUnderlyingPrice(option);
+			var payoff = expectedPayoff(option);
+			
+			return underlyingPrice - discount(option)*payoff;
 		}
 
 	};	
 
-	//	Regular option price calculation via Black-Scholes model.
-	//
-	//	type - "p" for put, "c" for call
-	// 	input - {
-	//		S: spot price of the underlying security,
-	//		K: strike price,
-	//		maturity: time to maturity,
-	//		r: risk free interest rate,
-	//		volatility: volatility of the underlying security
-	// 	}
-	var price = function(type, input) {
-		var sign = joptions.sign(type);
+	var expectedUnderlyingPrice = function(option) {
+		var sign = joptions.sign(option.type);
+		return sign * option.S * cdf( sign*d1(option) );
+	};	
 
-		var expectedSpotPrice = sign * input.S * cdf( sign*d1(input) );
-		var expectedPayoff = sign * input.K * cdf( sign*d2(input) );
-		var discount = Math.exp(-input.r*input.maturity);
+	var expectedPayoff = function(option)  {
+		var sign = joptions.sign(option.type);
+		return sign * option.X * cdf( sign*d2(option) );
+	}
 
-		return expectedSpotPrice - discount*expectedPayoff;
+	var discount = function(option) 	{
+		return Math.exp(-option.r*option.T);
 	};
-
 }
