@@ -9,7 +9,7 @@ this.joptions = (function(undefined) {
 		var factor = 1/(input.volatility*Math.sqrt(input.maturity));      	
 		
 		return factor * ( Math.log(input.S/input.K)  +  drift * input.maturity );
-	}
+	};
 
 	return {
 		version:  function () {

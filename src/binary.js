@@ -3,7 +3,7 @@ module.exports = function(joptions) {
 	var cdf = joptions.cdf;
 	var d2 = joptions.d2;
 
-	//	Option price calculation.
+	//	Binary option price calculation.
 	//
 	//	type - "p" for put, "c" for call
 	// 	input - {

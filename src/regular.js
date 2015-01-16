@@ -4,7 +4,7 @@ module.exports = function(joptions) {
 	var d1 = joptions.d1;
 	var d2 = joptions.d2;
 
-	//	Regular option price calculation.
+	//	Regular option price calculation via Black-Scholes model.
 	//
 	//	type - "p" for put, "c" for call
 	// 	input - {
@@ -22,7 +22,7 @@ module.exports = function(joptions) {
 		var discount = Math.exp(-input.r*input.maturity);
 
 		return expectedSpotPrice - discount*expectedPayoff;
-	}
+	};
 
 	joptions.regular = {
 		
