@@ -7,7 +7,7 @@ module.exports = function(joptions) {
 	joptions.greeks = {
 
 		delta: function(type, input) {
-			var sign = { "p": -1, "c": 1 }[type];
+			var sign = joptions.sign(type);
 			return sign*cdf( sign*d1(input) );
 		},
 

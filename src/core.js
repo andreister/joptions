@@ -26,6 +26,15 @@ this.joptions = (function(undefined) {
 		},
 		pdf: function(value) {
 			return jStat.normal.pdf(value, 0, 1);
+		},
+
+		sign: function(optionType) 		{
+			return { "p": -1, "c": 1 }[optionType];
+		},
+		clone: function(x, update) {
+			var result = JSON.parse(JSON.stringify(x));
+			update(result);
+			return result;
 		}
 	};
 
