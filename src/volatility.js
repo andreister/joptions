@@ -8,6 +8,10 @@ module.exports = function(joptions) {
 		
 		implied: function(option) {
 			return volatility(option);
+		},
+
+		estimated: function(returns) {
+			return deviation(returns);
 		}
 
 	};
@@ -30,7 +34,6 @@ module.exports = function(joptions) {
 		option.volatility = (option.P/option.S) * (2.5/Math.sqrt(option.T));		//initial guess via Brenner and Subrahmanyam (1988)
 		
 		for (var i = 0; i < ITERATIONS; i++) {
-
   			var diff = option.P - price(option);
   			if (Math.abs(diff) < ACCURACY) {
   				return option.volatility;
@@ -40,7 +43,14 @@ module.exports = function(joptions) {
 
   		console.error("joptions.implied.volatility(): failed to converge");
 		return 0;
-	}
+	};
+
+	//	Volatility estimate via returns standard deviation.
+	//
+	// 	returns - array or numbers
+	var deviation = function(returns) {
+		return joptions.stdev(returns);
+	};
 
 
 }

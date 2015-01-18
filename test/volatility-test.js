@@ -21,6 +21,11 @@ suite.addBatch({
     'put implied volatility': function(volatility) {
       var option = { type: 'p', S: 100, X: 100, P: 11.10, T: 0.5, r: 0.03 };
       assert.epsilon(tolerance, volatility.implied(option), 0.4240814121);
+    },
+
+    'estimated volatility': function(volatility) {
+      var returns = [0.5, -0.2, 0.03, -0.01, -0.4, 0.1, 0.06];
+      assert.epsilon(tolerance, volatility.estimated(returns), 0.2779945);
     }    
 
   }

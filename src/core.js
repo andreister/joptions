@@ -29,6 +29,9 @@ this.joptions = (function(undefined) {
 		pdf: function(value) {
 			return jStat.normal.pdf(value, 0, 1);
 		},
+		stdev: function(list) {
+			return jStat.stdev(list, true);
+		},
 
 		sign: function(optionType) 		{
 			return { "p": -1, "c": 1 }[optionType];
