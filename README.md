@@ -1,5 +1,5 @@
 # joptions
-JavaScript library for Options valuation
+JavaScript library for Options pricing (Black-Scholes, Garman-Kohlhagen models)
 
 * Call and put prices for 
   * regular options
