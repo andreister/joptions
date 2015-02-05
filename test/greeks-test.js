@@ -11,7 +11,7 @@ suite.addBatch({
       return joptions.greeks;
     },
 
-    //Checked against RQuantLib's EuropeanOption('c', 100, 80, 0, 0.06, 9/12, 0.35)
+	//Checked against RQuantLib's EuropeanOption('c', 100, 80, 0, 0.06, 9/12, 0.35)
 	'call delta': function(greeks) {
 		var option = { type: 'c', S: 100, X: 80, T: 9/12, r: 0.06, volatility: 0.35 };
 		assert.epsilon(tolerance, greeks.delta(option), 0.8499);

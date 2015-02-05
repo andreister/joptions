@@ -11,7 +11,7 @@ suite.addBatch({
     },
 
     'version': function(joptions) {
-      assert.equal(joptions.version(), "0.0.1");
+      assert.equal(joptions.version(), "0.0.2");
     }
   }
 });

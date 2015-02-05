@@ -1,7 +1,7 @@
 module.exports = function(joptions) {
 
-	var cdf = joptions.cdf;
-	var d2 = joptions.d2;	
+	var cdf = joptions.util.cdf;
+	var d2 = joptions.util.d2;	
 
 	joptions.binary = {
 
@@ -23,7 +23,7 @@ module.exports = function(joptions) {
 	};
 
 	var expectedPayoff = function(option)  {
-		var sign = joptions.sign(option.type);
+		var sign = joptions.util.sign(option.type);
 		return cdf( sign*d2(option) );
 	}
 

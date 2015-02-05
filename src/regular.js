@@ -1,8 +1,8 @@
 module.exports = function(joptions) {
 
-	var cdf = joptions.cdf;
-	var d1 = joptions.d1;
-	var d2 = joptions.d2;
+	var cdf = joptions.util.cdf;
+	var d1 = joptions.util.d1;
+	var d2 = joptions.util.d2;
 
 	joptions.regular = {
 		
@@ -26,12 +26,12 @@ module.exports = function(joptions) {
 	};	
 
 	var expectedUnderlyingPrice = function(option) {
-		var sign = joptions.sign(option.type);
+		var sign = joptions.util.sign(option.type);
 		return sign * option.S * cdf( sign*d1(option) );
 	};	
 
 	var expectedPayoff = function(option)  {
-		var sign = joptions.sign(option.type);
+		var sign = joptions.util.sign(option.type);
 		return sign * option.X * cdf( sign*d2(option) );
 	}
 

@@ -1,8 +1,8 @@
 module.exports = function(joptions) {
 
-	var cdf = joptions.cdf;
-	var d1 = joptions.d1;
-	var d2 = joptions.d2;	
+	var cdf = joptions.util.cdf;
+	var d1 = joptions.util.d1;
+	var d2 = joptions.util.d2;	
 
 	joptions.currency = {
 		
@@ -18,7 +18,7 @@ module.exports = function(joptions) {
 		//		volatility: volatility of the returns on the foreign currency 
 		// 	}
 		price: function(option) {
-			var noInterestOption = joptions.clone(option, function(x) { x.r = option.r - option.rf});
+			var noInterestOption = joptions.util.clone(option, function(x) { x.r = option.r - option.rf});
 
 			var underlyingPrice = expectedUnderlyingPrice(option.S, noInterestOption);
 			var payoff = expectedPayoff(option.X, noInterestOption);
@@ -29,12 +29,12 @@ module.exports = function(joptions) {
 	};
 
 	var expectedUnderlyingPrice = function(S, option) {
-		var sign = joptions.sign(option.type);
+		var sign = joptions.util.sign(option.type);
 		return sign * S * cdf( sign * d1(option) );
 	};
 
 	var expectedPayoff = function(X, option) {
-		var sign = joptions.sign(option.type);
+		var sign = joptions.util.sign(option.type);
 		return sign * X * cdf( sign * d2(option) );
 	};
 

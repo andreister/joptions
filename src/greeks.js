@@ -1,13 +1,13 @@
 module.exports = function(joptions) {
 
-	var cdf = joptions.cdf;
-	var pdf = joptions.pdf;
-	var d1 = joptions.d1;
+	var cdf = joptions.util.cdf;
+	var pdf = joptions.util.pdf;
+	var d1 = joptions.util.d1;
 
 	joptions.greeks = {
 
 		delta: function(option) {
-			var sign = joptions.sign(option.type);
+			var sign = joptions.util.sign(option.type);
 			return sign*cdf( sign*d1(option) );
 		},
 

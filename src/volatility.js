@@ -1,6 +1,6 @@
 module.exports = function(joptions) {
 
-	var d1 = joptions.d1;
+	var d1 = joptions.util.d1;
 	var price = joptions.regular.price;
 	var vega = joptions.greeks.vega;	
 
@@ -49,7 +49,7 @@ module.exports = function(joptions) {
 	//
 	// 	returns - array or numbers
 	var deviation = function(returns) {
-		return joptions.stdev(returns);
+		return joptions.util.stdev(returns);
 	};
 
 
